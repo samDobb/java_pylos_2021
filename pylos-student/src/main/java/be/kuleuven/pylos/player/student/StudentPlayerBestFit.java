@@ -66,7 +66,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
 
             // find free location on a higher lvl
             for (PylosSquare square : allSquares){
-                if (square.isSquare() && square.getTopLocation().isUsable()){
+                if (square.isSquare() && square.getTopLocation().isUsable() && square.getInSquare(this.OTHER) != 3){
                     for (PylosSphere sphere: myMovableSpheres){
                         if (sphere.canMoveTo(square.getTopLocation())){
                             bestLocation = square.getTopLocation();
@@ -110,7 +110,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
                 for (PylosLocation location: locations){
                     if(location.getSphere().PLAYER_COLOR == this.PLAYER_COLOR && location.getSphere().canMove()){
                         game.removeSphere(location.getSphere());
-
+                        return;
                     }
                 }
             }
