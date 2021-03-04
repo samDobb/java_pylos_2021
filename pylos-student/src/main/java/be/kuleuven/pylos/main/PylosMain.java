@@ -28,7 +28,7 @@ public class PylosMain {
 		Random random = new Random(0);
 
 		PylosPlayer randomPlayerCodes = new PylosPlayerBestFit();
-		PylosPlayer randomPlayerStudent = new StudentPlayerBestFit();
+		PylosPlayer randomPlayerStudent = new PylosPlayerMiniMax(8);
 
 		PylosBoard pylosBoard = new PylosBoard();
 		PylosGame pylosGame = new PylosGame(pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE);
@@ -37,10 +37,10 @@ public class PylosMain {
 	}
 
 	public void startBattle(){
-		PylosPlayer playerLight = new PylosPlayerRandomFit();
-		PylosPlayer playerDark = new StudentPlayerRandomFit();
+		PylosPlayer playerLight = new PylosPlayerBestFit();
+		PylosPlayer playerDark = new StudentPlayerBestFit();
 
-		Battle.play(playerLight, playerDark, 100);
+		Battle.play(playerLight, playerDark, 5000);
 	}
 
 	public static void main(String[] args){
