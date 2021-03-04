@@ -92,7 +92,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
             int max = 0;
             boolean prettyGoodLocation = false;
             for (PylosLocation location: allPossibleLocations){
-                if (location.getMaxInSquare(this) > max && location.isUsable()){
+                if (location.isUsable()){
                     // TODO zorgen dat we geen square maken voor zo ver als mogelijk als onze tegenstander nog een vrij bal heeft
                     // --> kijken of we een square maken
                     // --> kijken of tegenstander nog een vrije bal heeft -> zo niet is een square maken zelfs goed peis ik
@@ -129,10 +129,13 @@ public class StudentPlayerBestFit extends PylosPlayer{
                                 prettyGoodLocation = true;
                             }
                         }
-                    }else if(makeASquare && !enemyHasFreeBall){
+                    }else if(!prettyGoodLocation && makeASquare && !enemyHasFreeBall && location.getMaxInSquare(this) > max){
                         // we do make a square but the enemy can't really do anything with it since they have no free ball
                         // but still i don't like making squares so i'm initially not going to use it
-                    }else {
+
+
+                    }else if (!prettyGoodLocation && location.getMaxInSquare(this) > max ){
+                        //TODO mss zo plaatsen int centrum voorrang geven ofzo
                         max = location.getMaxInSquare(this);
                         bestLocation = location;
                     }
@@ -146,9 +149,25 @@ public class StudentPlayerBestFit extends PylosPlayer{
             usedSphere = board.getReserve(this);
         }
         if (bestLocation == null){
+            //TODO hier kunnen we ook nog het centrum voorrang geven
             bestLocation = allPossibleLocations.size() == 1 ? allPossibleLocations.get(0) : allPossibleLocations.get(getRandom().nextInt(allPossibleLocations.size() - 1));
 
+            //poging tot betere early game, maar enkel een daling in winratio als gevolg :p
+            /*
+                 int i = 4;
+                 while(i > 0 && bestLocation == null) {
+                     for (PylosLocation location : allPossibleLocations) {
+                         if (location.getSquares().size() == i) {
+                             bestLocation = location;
+                         }
+
+
+                     }
+                     i--;
+                 }
+*/
         }
+
         game.moveSphere(usedSphere, bestLocation);
     }
 
