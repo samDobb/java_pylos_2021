@@ -39,7 +39,7 @@ public class PylosMain {
 
 	public void startBattle(){
 		PylosPlayer playerLight = new StudentPlayerBestFit();
-		PylosPlayer playerDark = new PylosPlayerBestFit();
+		PylosPlayer playerDark = new StudentPlayerRandomFit();
 
 		Battle.play(playerLight, playerDark, 5000);
 	}

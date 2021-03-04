@@ -23,36 +23,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
         PylosLocation bestLocation = null;
         PylosSphere usedSphere = null;
 
-        // place ball if the other one is getting a square
-        for (PylosSquare square : allSquares){
-            if (square.getInSquare(this.OTHER) == 3  || square.getInSquare(this.OTHER) == 2 && square.getInSquare(this) == 0  ){
-                // tegenstander heeft 3 of 2 ballen in een vierkant
-                if (square.getInSquare() == 3 || square.getInSquare() == 2){
-                    PylosLocation[] squareLocations = square.getLocations();
-                    for (PylosLocation bl : squareLocations) {
-                        if (bl.isUsable()) {
-                            bestLocation = bl;
-                        }
-                    }
-                }
-            }
-        }
-        // try to get a square ourselves
-        if (bestLocation == null){
-            for (PylosSquare square : allSquares){
-                if (square.getInSquare(this) == 3){
-                    // we hebben 3 ballen in een vierkant
-                    if (square.getInSquare() == 3){
-                        PylosLocation[] squareLocations = square.getLocations();
-                        for (PylosLocation bl : squareLocations) {
-                            if (bl.isUsable()) {
-                                bestLocation = bl;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
         // place ball on a higher lvl
         if (bestLocation == null){
             // find free ball
@@ -88,6 +59,41 @@ public class StudentPlayerBestFit extends PylosPlayer{
                 }
             }
         }
+
+        // try to get a square ourselves
+        if (bestLocation == null){
+            for (PylosSquare square : allSquares){
+                if (square.getInSquare(this) == 3){
+                    // we hebben 3 ballen in een vierkant
+                    if (square.getInSquare() == 3){
+                        PylosLocation[] squareLocations = square.getLocations();
+                        for (PylosLocation bl : squareLocations) {
+                            if (bl.isUsable()) {
+                                bestLocation = bl;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // place ball if the other one is getting a square
+        if(bestLocation == null){
+            for (PylosSquare square : allSquares){
+                if (square.getInSquare(this.OTHER) == 3  || square.getInSquare(this.OTHER) == 2 && square.getInSquare(this) == 0  ){
+                    // tegenstander heeft 3 of 2 ballen in een vierkant
+                    if (square.getInSquare() == 3 || square.getInSquare() == 2){
+                        PylosLocation[] squareLocations = square.getLocations();
+                        for (PylosLocation bl : squareLocations) {
+                            if (bl.isUsable()) {
+                                bestLocation = bl;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         if (bestLocation == null){
             int max = 0;
             boolean prettyGoodLocation = false;
@@ -148,6 +154,7 @@ public class StudentPlayerBestFit extends PylosPlayer{
         if (usedSphere == null){
             usedSphere = board.getReserve(this);
         }
+
         if (bestLocation == null){
             //TODO hier kunnen we ook nog het centrum voorrang geven
             bestLocation = allPossibleLocations.size() == 1 ? allPossibleLocations.get(0) : allPossibleLocations.get(getRandom().nextInt(allPossibleLocations.size() - 1));
