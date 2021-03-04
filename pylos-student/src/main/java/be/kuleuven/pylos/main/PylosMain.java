@@ -47,8 +47,8 @@ public class PylosMain {
 
 		/* !!! vm argument !!! -ea */
 
-	//	new PylosMain().startSingleGame();
-		new PylosMain().startBattle();
+		new PylosMain().startSingleGame();
+	//	new PylosMain().startBattle();
 
 	}
 
